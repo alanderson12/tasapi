@@ -6,7 +6,7 @@ namespace api.models
     public class DBConnect
     {
         private MySqlConnection connection;
-        private string sever;
+        private string server;
         private string database;
         private string user;
         private string password;

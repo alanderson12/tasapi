@@ -7,7 +7,7 @@ using System.Security.AccessControl;
 using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
-using MySqlData.MySqlClient;
+using MySql.Data.MySqlClient;
 
 namespace api.models.Database
 {
@@ -37,7 +37,7 @@ namespace api.models.Database
         public List<Feedback> GetAllFeedback(){
 
             DBConnect db = new DBConnect();
-            bool isOpen = DbColumn.OpenConnection();
+            bool isOpen = db.OpenConnection();
 
             if(isOpen){
                 MySqlConnection conn = db.GetConnection();
