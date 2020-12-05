@@ -2,6 +2,7 @@ using System.Security.AccessControl;
 using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
+using MySql.Data.MySqlClient;
 
 namespace api.models.Database
 {
@@ -27,22 +28,44 @@ namespace api.models.Database
         }
 
         public List<Rank> GetAllRankings(){
-            List<Rank> temp = new List<Rank>();
+            DBConnect db = new DBConnect();
+            bool isOpen = db.OpenConnection();
 
-            string cs = @"URI=file:C:\Users\ndiro\source\repos\Tuscaloosa_Accounting_Project\api\TAS.db";
-            using var con = new SQLiteConnection(cs);
-            con.Open();
+            if(isOpen){
+                MySqlConnection conn = db.GetConnection();
+                string stm = "SELECT * FROM ranking";
+                MySqlCommand cmd = new MySqlCommand(stm, conn);
 
-            string stm = "SELECT * FROM Rank";
-            using var cmd = new SQLiteCommand(stm, con);
+                List<Rank> allRanks = new List<Rank>();
 
-            using SQLiteDataReader rdr = cmd.ExecuteReader();
+                using (var rdr = cmd.ExecuteReader())
+                {
+                    while(rdr.Read()){
+                        allRanks.Add(new Rank(){DestinationID = rdr.GetInt32(2), RankScore = rdr.GetInt32(1)});
+                    }
+                }
 
-            while(rdr.Read()){
-                temp.Add(new Rank(){DestinationID = rdr.GetInt32(2), RankScore = rdr.GetInt32(1)});
+                db.CloseConnection();
+                return allRanks;
+            } else{
+                return new List<Rank>();
             }
+            // List<Rank> temp = new List<Rank>();
 
-            return temp;
+            // string cs = @"URI=file:C:\Users\ndiro\source\repos\Tuscaloosa_Accounting_Project\api\TAS.db";
+            // using var con = new SQLiteConnection(cs);
+            // con.Open();
+
+            // string stm = "SELECT * FROM Rank";
+            // using var cmd = new SQLiteCommand(stm, con);
+
+            // using SQLiteDataReader rdr = cmd.ExecuteReader();
+
+            // while(rdr.Read()){
+            //     temp.Add(new Rank(){DestinationID = rdr.GetInt32(2), RankScore = rdr.GetInt32(1)});
+            // }
+
+            // return temp;
         }
 
         public void PostRank(Rank obj){
