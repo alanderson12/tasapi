@@ -1,7 +1,13 @@
+using System.Diagnostics;
+using System.Security.Cryptography;
+using System.Runtime.InteropServices;
+using System.Data;
+using System.Data.Common;
 using System.Security.AccessControl;
 using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
+using MySqlData.MySqlClient;
 
 namespace api.models.Database
 {
@@ -29,23 +35,48 @@ namespace api.models.Database
         }
 
         public List<Feedback> GetAllFeedback(){
-            List<Feedback> temp = new List<Feedback>();
 
-            string cs = @"URI=file:C:\Users\ndiro\source\repos\Tuscaloosa_Accounting_Project\api\TAS.db";
-            using var con = new SQLiteConnection(cs);
-            con.Open();
+            DBConnect db = new DBConnect();
+            bool isOpen = DbColumn.OpenConnection();
 
-            string stm = "SELECT * FROM Feedback";
-            using var cmd = new SQLiteCommand(stm, con);
+            if(isOpen){
+                MySqlConnection conn = db.GetConnection();
+                string stm = "SELECT * FROM feedback";
+                MySqlCommand cmd = new MySqlCommand(stm, conn);
 
-            using SQLiteDataReader rdr = cmd.ExecuteReader();
+                List<Feedback> allFeedbacks = new List<Feedback>();
 
-            while(rdr.Read()){
-                temp.Add(new Feedback(){DestinationID = rdr.GetInt32(0), ReviewMessage = rdr.GetString(1), NumQuestions = rdr.GetInt32(2), 
-                    ScoreTotal = rdr.GetInt32(3), EditTracking = rdr.GetString(4), FinalScore = rdr.GetDouble(5)});
+                using (var rdr = cmd.ExecuteReader())
+                {
+                    while(rdr.Read()){
+                        allFeedbacks.Add(new Feedback(){DestinationID = rdr.GetInt32(0), ReviewMessage = rdr.GetString(1), NumQuestions = rdr.GetInt32(2), 
+                        ScoreTotal = rdr.GetInt32(3), EditTracking = rdr.GetString(4), FinalScore = rdr.GetDouble(5)});
+                    }
+                }
+
+                db.CloseConnection();
+                return allFeedbacks;
+            } else{
+                return new List<Feedback>();
             }
 
-            return temp;
+            // List<Feedback> temp = new List<Feedback>();
+
+            // string cs = @"URI=file:C:\Users\ndiro\source\repos\Tuscaloosa_Accounting_Project\api\TAS.db";
+            // using var con = new SQLiteConnection(cs);
+            // con.Open();
+
+            // string stm = "SELECT * FROM Feedback";
+            // using var cmd = new SQLiteCommand(stm, con);
+
+            // using SQLiteDataReader rdr = cmd.ExecuteReader();
+
+            // while(rdr.Read()){
+            //     temp.Add(new Feedback(){DestinationID = rdr.GetInt32(0), ReviewMessage = rdr.GetString(1), NumQuestions = rdr.GetInt32(2), 
+            //         ScoreTotal = rdr.GetInt32(3), EditTracking = rdr.GetString(4), FinalScore = rdr.GetDouble(5)});
+            // }
+
+            // return temp;
         }
 
         public void PostFeedback(Feedback obj){

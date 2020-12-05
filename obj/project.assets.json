@@ -2,6 +2,9 @@
   "version": 3,
   "targets": {
     ".NETCoreApp,Version=v3.1": {
+      "chocolatey/0.9.8.3": {
+        "type": "package"
+      },
       "Microsoft.AspNetCore.Html.Abstractions/2.2.0": {
         "type": "package",
         "dependencies": {
@@ -443,6 +446,12 @@
         },
         "compile": {
           "ref/netstandard1.3/Microsoft.Win32.Primitives.dll": {}
+        }
+      },
+      "mysql/5.5.14.1": {
+        "type": "package",
+        "dependencies": {
+          "chocolatey": "0.9.8.3"
         }
       },
       "NETStandard.Library/1.6.1": {
@@ -1834,6 +1843,27 @@
     }
   },
   "libraries": {
+    "chocolatey/0.9.8.3": {
+      "sha512": "Vnh4z2rilpXn9mUm9tFXj1Sxt+HSCemrm/znxDL0HFO50HvtJuRRQ0SQnLzt/Po3UjmJvnfQk5z6bJY/2doJrQ==",
+      "type": "package",
+      "path": "chocolatey/0.9.8.3",
+      "hasTools": true,
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "chocolatey.0.9.8.3.nupkg.sha512",
+        "chocolatey.nuspec",
+        "chocolateyicon.gif",
+        "tools/chocolateyInstall.ps1",
+        "tools/chocolateyInstall/LICENSE.txt",
+        "tools/chocolateyInstall/NuGet.exe",
+        "tools/chocolateyInstall/chocolatey.cmd",
+        "tools/chocolateyInstall/chocolatey.ps1",
+        "tools/chocolateyInstall/helpers/chocolateyInstaller.psm1",
+        "tools/chocolateysetup.psm1",
+        "tools/init.ps1"
+      ]
+    },
     "Microsoft.AspNetCore.Html.Abstractions/2.2.0": {
       "sha512": "Y4rs5aMEXY8G7wJo5S3EEt6ltqyOTr/qOeZzfn+hw/fuQj5GppGckMY5psGLETo1U9hcT5MmAhaT5xtusM1b5g==",
       "type": "package",
@@ -2595,6 +2625,22 @@
         "ref/xamarinmac20/_._",
         "ref/xamarintvos10/_._",
         "ref/xamarinwatchos10/_._"
+      ]
+    },
+    "mysql/5.5.14.1": {
+      "sha512": "x5XrAlCImJ7KmgzSsbgiUIqq70N08riTAARfECjO4TdzBy5gwS1dGkki0oFfHAPvmYi8dMX/lhzsEvakXEadOA==",
+      "type": "package",
+      "path": "mysql/5.5.14.1",
+      "hasTools": true,
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "content/mysql.ReadMe.txt",
+        "mysql.5.5.14.1.nupkg.sha512",
+        "mysql.nuspec",
+        "mysqllogo.png",
+        "tools/chocolateyInstall.ps1",
+        "tools/install.ps1"
       ]
     },
     "NETStandard.Library/1.6.1": {
@@ -6131,23 +6177,24 @@
   "projectFileDependencyGroups": {
     ".NETCoreApp,Version=v3.1": [
       "Microsoft.VisualStudio.Web.CodeGeneration.Design >= 3.1.4",
-      "System.Data.SQLite.Core >= 1.0.113.6"
+      "System.Data.SQLite.Core >= 1.0.113.6",
+      "mysql >= *"
     ]
   },
   "packageFolders": {
-    "C:\\Users\\ndiro\\.nuget\\packages\\": {}
+    "/Users/abigailanderson/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\ndiro\\source\\repos\\Tuscaloosa_Accounting_Project\\api\\api.csproj",
+      "projectUniqueName": "/Users/abigailanderson/Tuscaloosa_Accounting_Project/api/api.csproj",
       "projectName": "api",
-      "projectPath": "C:\\Users\\ndiro\\source\\repos\\Tuscaloosa_Accounting_Project\\api\\api.csproj",
-      "packagesPath": "C:\\Users\\ndiro\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\ndiro\\source\\repos\\Tuscaloosa_Accounting_Project\\api\\obj\\",
+      "projectPath": "/Users/abigailanderson/Tuscaloosa_Accounting_Project/api/api.csproj",
+      "packagesPath": "/Users/abigailanderson/.nuget/packages/",
+      "outputPath": "/Users/abigailanderson/Tuscaloosa_Accounting_Project/api/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\ndiro\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "/Users/abigailanderson/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "netcoreapp3.1"
@@ -6176,6 +6223,10 @@
           "System.Data.SQLite.Core": {
             "target": "Package",
             "version": "[1.0.113.6, )"
+          },
+          "mysql": {
+            "target": "Package",
+            "version": "[*, )"
           }
         },
         "imports": [
@@ -6196,7 +6247,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.401\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/3.1.401/RuntimeIdentifierGraph.json"
       }
     }
   }
